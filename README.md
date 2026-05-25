@@ -11,14 +11,14 @@ We construct multi-hop reasoning questions from two sources to evaluate whether 
 
 ## Multi-Hop Logical Types
 
-| Type | Abbreviation | Reasoning Pattern | Example |
-|------|-------------|-------------------|---------|
-| Chain Implication | CI | A→B, B→C ⟹ A→C | "X is citizen of Y" + "capital of Y is Z" → "What is the capital of X's country?" |
-| Contrapositive Reasoning | CR | A→B ⟹ ¬B→¬A | "X plays for team Y" → "Which player would leave if team Y disbanded?" |
-| Disjunctive Elimination | DE | A∨B, ¬A ⟹ B | "Either X or Z holds title" + "X does not" → "Who holds the title?" |
-| Identity Substitution | IdS | A=B ⟹ f(A)=f(B) | "X is also known as Y" → "What is Y's nationality?" |
-| Instance Subsumption | InS | x∈A, A⊂B ⟹ x∈B | "X works at Y" + "Y is a type of Z" → "X works at what kind of institution?" |
-| Multi-Element Intersection | MEI | x∈A∩B ⟹ x∈A ∧ x∈B | "Both X and Z are citizens of Y" → "Who else shares X's nationality?" |
+| Type | Abbreviation | Formal Rule | Example |
+|------|-------------|-------------|---------|
+| Hypothetical Syllogism | HS | A→B, B→C ⊢ A→C | "X is citizen of Y" + "capital of Y is Z" → "What is the capital of X's country?" |
+| Modus Tollens | MT | A→B ∧ ¬B ⊢ ¬A | "X plays for team Y" → "Which player would leave if team Y disbanded?" |
+| Disjunctive Syllogism | DS | P∨Q ∧ ¬P ⊢ Q | "Either X or Z holds title" + "X does not" → "Who holds the title?" |
+| Leibniz's Law | LL | x=y ∧ P(x) ⊢ P(y) | "X is also known as Y" → "What is Y's nationality?" |
+| Modus Ponens | MP | ∀x(S→P) ∧ S(a) ⊢ P(a) | "X works at Y" + "Y is a type of Z" → "X works at what kind of institution?" |
+| Conjunction Decomposition | CD | ∧ᵢ[P(xᵢ)∧Qᵢ(xᵢ)] ⊢ ∧ᵢP(xᵢ) | "Both X and Z are citizens of Y" → "Who else shares X's nationality?" |
 
 ## Project Structure
 
