@@ -91,5 +91,5 @@ python books_augmentation/supplement_questions.py --input_file multihop_rewritte
 
 ## Data
 
-- **MQuAKE-CF**: Available from the [MQuAKE repository](https://github.com/Yocodeyo/MQuAKE)
+- **MQuAKE-CF**: Available from the [MQuAKE repository](https://github.com/princeton-nlp/MQuAKE)
 - **Books (MUSE-Books)**: Available from the [MUSE benchmark](https://github.com/jaechan-repo/muse_bench)
