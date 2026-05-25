@@ -6,8 +6,8 @@ Code for constructing multi-hop evaluation datasets used in our paper on leak-re
 
 We construct multi-hop reasoning questions from two sources to evaluate whether LLM unlearning methods truly erase knowledge or merely suppress surface-level recall:
 
-1. **MQuAKE Augmentation**: Generates multi-hop questions from MQuAKE-CF knowledge triples using 6 formal logical reasoning types.
-2. **Books Augmentation**: Extracts knowledge from book text and generates single-hop + multi-hop questions via LLM-based pipelines.
+1. **MQuAKE Curation**: Generates multi-hop questions from MQuAKE-CF knowledge triples using 6 formal logical reasoning types.
+2. **Books Curation**: Extracts knowledge from book text and generates single-hop + multi-hop questions via LLM-based pipelines.
 
 ## Multi-Hop Logical Types
 
@@ -23,8 +23,8 @@ We construct multi-hop reasoning questions from two sources to evaluate whether 
 ## Project Structure
 
 ```
-├── mquake_augmentation/          # MQuAKE multi-hop question generation
-│   ├── run_augmentation.py       # Main pipeline entry point
+├── mquake_curation/          # MQuAKE multi-hop question generation
+│   ├── run_curation.py       # Main pipeline entry point
 │   ├── config.py                 # Configuration (API keys, models)
 │   ├── data_loader.py            # Load MQuAKE-CF data
 │   ├── llm_generator.py          # LLM-based question generation
@@ -37,7 +37,7 @@ We construct multi-hop reasoning questions from two sources to evaluate whether 
 │       ├── instance_subsumption.py
 │       └── multi_element_intersection.py
 │
-└── books_augmentation/           # Books knowledge extraction & QA generation
+└── books_curation/           # Books knowledge extraction & QA generation
     ├── extract_viewpoints_books.py   # Step 1: Extract viewpoints from text
     ├── extract_knowledge.py          # Step 2: Extract knowledge triples
     ├── clean_knowledge.py            # Step 3: Clean & deduplicate knowledge
@@ -49,38 +49,38 @@ We construct multi-hop reasoning questions from two sources to evaluate whether 
 
 ## Usage
 
-### MQuAKE Augmentation
+### MQuAKE Curation
 
 ```bash
 # Set your OpenAI-compatible API key
 export OPENAI_API_KEY="your-key-here"
 
-# Run augmentation pipeline
-python mquake_augmentation/run_augmentation.py \
+# Run curation pipeline
+python mquake_curation/run_curation.py \
     --input_file /path/to/MQuAKE-CF-3k-v2.json \
     --output_dir /path/to/output
 ```
 
-### Books Augmentation
+### Books Curation
 
 The books pipeline runs sequentially:
 
 ```bash
 # Step 1: Extract viewpoints from book text
-python books_augmentation/extract_viewpoints_books.py \
+python books_curation/extract_viewpoints_books.py \
     --input_file /path/to/book.txt \
     --output_file viewpoints.json \
     --api_key YOUR_API_KEY
 
 # Step 2-4: Extract and clean knowledge
-python books_augmentation/extract_knowledge.py --input_file viewpoints.json --output_file knowledge.json --api_key YOUR_API_KEY
-python books_augmentation/clean_knowledge.py --input_file knowledge.json --output_file knowledge_clean.json --api_key YOUR_API_KEY
-python books_augmentation/clean_viewpoints.py --input_file viewpoints.json --output_file viewpoints_clean.json --api_key YOUR_API_KEY
+python books_curation/extract_knowledge.py --input_file viewpoints.json --output_file knowledge.json --api_key YOUR_API_KEY
+python books_curation/clean_knowledge.py --input_file knowledge.json --output_file knowledge_clean.json --api_key YOUR_API_KEY
+python books_curation/clean_viewpoints.py --input_file viewpoints.json --output_file viewpoints_clean.json --api_key YOUR_API_KEY
 
 # Step 5-7: Generate multi-hop questions
-python books_augmentation/generate_multihop.py --input_file knowledge_clean.json --output_file multihop.json --api_key YOUR_API_KEY
-python books_augmentation/generate_and_rewrite.py --input_file multihop.json --output_file multihop_rewritten.json --api_key YOUR_API_KEY
-python books_augmentation/supplement_questions.py --input_file multihop_rewritten.json --output_file multihop_final.json --api_key YOUR_API_KEY
+python books_curation/generate_multihop.py --input_file knowledge_clean.json --output_file multihop.json --api_key YOUR_API_KEY
+python books_curation/generate_and_rewrite.py --input_file multihop.json --output_file multihop_rewritten.json --api_key YOUR_API_KEY
+python books_curation/supplement_questions.py --input_file multihop_rewritten.json --output_file multihop_final.json --api_key YOUR_API_KEY
 ```
 
 ## Requirements
